@@ -1,87 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import 'aframe';
 
 const SantaARScene = () => {
-  const sceneRef = useRef(null);
-  const arSystemInitialized = useRef(false);
-
   useEffect(() => {
-    // Verificar si ya se inicializó el sistema AR
-    if (arSystemInitialized.current) return;
-    
-    const scene = sceneRef.current;
-    if (!scene) return;
-
-    // Función para manejar la carga exitosa de la escena
-    const onSceneLoaded = () => {
-      console.log('Escena AR cargada correctamente');
-      // Ocultar el loader cuando la escena esté lista
+    // Ocultar el loader cuando la escena esté lista
+    const timer = setTimeout(() => {
       const loader = document.querySelector('.arjs-loader');
       if (loader) {
         loader.style.display = 'none';
       }
-      
-      // Configuración adicional de la escena AR
-      if (scene.hasLoaded) {
-        scene.setAttribute('vr-mode-ui', 'enabled: false');
-        scene.setAttribute('renderer', 'colorManagement: true; antialias: true;');
-      }
-    };
+    }, 3000);
 
-    // Función para manejar errores
-    const onError = (error) => {
-      console.error('Error en la escena AR:', error);
-      // Mostrar mensaje de error al usuario
-      const errorDiv = document.createElement('div');
-      errorDiv.style.position = 'fixed';
-      errorDiv.style.top = '0';
-      errorDiv.style.left = '0';
-      errorDiv.style.width = '100%';
-      errorDiv.style.padding = '15px';
-      errorDiv.style.backgroundColor = '#ffebee';
-      errorDiv.style.color = '#c62828';
-      errorDiv.style.zIndex = '10000';
-      errorDiv.textContent = 'Error al cargar la experiencia AR. Por favor, recarga la página.';
-      document.body.prepend(errorDiv);
-    };
-
-    // Agregar event listeners
-    scene.addEventListener('loaded', onSceneLoaded);
-    scene.addEventListener('error', onError);
-
-    // Marcar como inicializado
-    arSystemInitialized.current = true;
-
-    // Limpieza al desmontar el componente
-    return () => {
-      scene.removeEventListener('loaded', onSceneLoaded);
-      scene.removeEventListener('error', onError);
-      
-      // Limpiar la escena
-      if (scene.hasLoaded) {
-        const camera = scene.camera;
-        const renderer = scene.renderer;
-        
-        if (renderer) {
-          renderer.dispose();
-        }
-        
-        if (camera) {
-          camera.dispose();
-        }
-        
-        // Limpiar todos los objetos de la escena
-        while (scene.children.length > 0) {
-          scene.remove(scene.children[0]);
-        }
-      }
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="ar-scene-container">
       <a-scene 
-        ref={sceneRef}
         embedded 
         arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
         renderer="antialias: true; alpha: true;"
