@@ -1,0 +1,181 @@
+/* Estilos generales de la aplicación */
+:root {
+  --primary-color: #e53935;
+  --secondary-color: #1e88e5;
+  --background-color: #f5f5f5;
+  --text-color: #333;
+  --error-color: #d32f2f;
+  --success-color: #388e3c;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* Estilos del encabezado */
+.app-header {
+  background: linear-gradient(135deg, var(--primary-color), #c62828);
+  color: white;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.app-header p {
+  margin: 0.5rem 0 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+/* Estilos del contenido principal */
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+  background-color: #ffebee;
+  border-left: 4px solid var(--error-color);
+  color: var(--error-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.error-message p {
+  margin: 0.5rem 0;
+}
+
+/* Estilos para la sección de activación de AR */
+.ar-prompt {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.ar-prompt p {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+/* Botón de activación de AR */
+.ar-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+.ar-button:hover {
+  background-color: #c62828;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(198, 40, 40, 0.5);
+}
+
+.ar-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(198, 40, 40, 0.5);
+}
+
+/* Texto de ayuda */
+.hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+/* Estilos del pie de página */
+.app-footer {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background-color: #fff;
+  color: #666;
+  font-size: 0.8rem;
+  border-top: 1px solid #eee;
+  position: relative;
+  z-index: 2;
+}
+
+/* Estilos para móviles */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .app-header p {
+    font-size: 0.8rem;
+  }
+  
+  .ar-prompt {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .ar-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
