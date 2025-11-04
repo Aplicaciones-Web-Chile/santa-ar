@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="description" content="Santa AR - Demo HTML pura con AR.js" />
+  <title>🎅 Santa AR (HTML)</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; }
+    #overlay { position: fixed; inset: 0; display: grid; place-items: center; background: #fff; z-index: 9999; }
+    #panel { text-align: center; max-width: 520px; padding: 24px 20px; border-radius: 14px; border: 1px solid #eee; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+    #panel h1 { margin: 0 0 8px; font-size: 22px; }
+    #panel p { margin: 6px 0; color: #555; }
+    .btn { margin-top: 12px; background: #e53935; color: #fff; border: 0; border-radius: 999px; padding: 12px 18px; font-weight: 700; cursor: pointer; }
+    .btn:hover { background: #c62828; }
+    .link { color: #1e88e5; text-decoration: none; }
+    .hide { display: none; }
+  </style>
+</head>
+<body>
+  <div id="overlay">
+    <div id="panel">
+      <h1>🎅 Santa AR</h1>
+      <p>Presiona el botón para activar la cámara.</p>
+      <p>
+        Usa el marcador <a class="link" href="https://ar-js-org.github.io/AR.js-Docs/data/images/hiro.png" target="_blank" rel="noopener">Hiro</a>.
+      </p>
+      <button id="start" class="btn">Activar cámara</button>
+    </div>
+  </div>
+
+  <a-scene id="scene" embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false" style="display:none">
+    <a-marker preset="hiro">
+      <a-box position="0 0.5 0" depth="1" height="1" width="1" color="#e53935"></a-box>
+      <a-text value="¡Feliz Navidad!" position="0 1.5 0" align="center" color="#e53935"></a-text>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    const startBtn = document.getElementById('start');
+    const overlay = document.getElementById('overlay');
+    const scene = document.getElementById('scene');
+
+    startBtn.addEventListener('click', async () => {
+      try {
+        // Solicita permiso explícito a la cámara (ayuda a Safari/iOS)
+        await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' } } });
+      } catch (e) {
+        console.warn('No se pudo pre-habilitar la cámara:', e);
+      }
+      overlay.classList.add('hide');
+      scene.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
