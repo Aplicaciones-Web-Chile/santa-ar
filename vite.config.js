@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/santa-ar',
+  base: '/santa-ar/',
   plugins: [react()],
   server: {
     host: true,
@@ -14,5 +14,4 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: true,
   },
-  base: '/', // Para rutas relativas en producción
 });

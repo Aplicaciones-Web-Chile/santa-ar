@@ -2,7 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # O 'master' según tu rama
+    branches: [ master ]
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
@@ -26,3 +29,4 @@ jobs:
         with:
           folder: dist
           branch: gh-pages
+          token: ${{ secrets.GITHUB_TOKEN }}
