@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Santa AR - Realidad Aumentada Simple">
+  <title>🎅 Santa AR</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    #start-button {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      padding: 20px 40px;
+      font-size: 18px;
+      background: #e53935;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(229, 57, 53, 0.4);
+    }
+    #start-button:hover {
+      background: #c62828;
+    }
+    #instructions {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 9998;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      text-align: center;
+      display: none;
+    }
+    .a-enter-vr-button {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <button id="start-button">🎅 Activar Realidad Aumentada</button>
+  
+  <div id="instructions">
+    <p>📸 Apunta al <strong>marcador Hiro</strong></p>
+    <p><small><a href="https://ar-js-org.github.io/AR.js-Docs/data/images/hiro.png" target="_blank">Descargar marcador</a></small></p>
+  </div>
+
+  <a-scene
+    id="ar-scene"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    vr-mode-ui="enabled: false"
+    style="display: none;"
+  >
+    <a-marker preset="hiro">
+      <a-box position="0 0.5 0" material="color: red;"></a-box>
+      <a-text value="¡Feliz Navidad!" position="0 1.5 0" align="center" color="#e53935"></a-text>
+    </a-marker>
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    document.getElementById('start-button').addEventListener('click', function() {
+      // Ocultar botón
+      this.style.display = 'none';
+      
+      // Mostrar escena AR
+      const scene = document.getElementById('ar-scene');
+      scene.style.display = 'block';
+      
+      // Mostrar instrucciones
+      document.getElementById('instructions').style.display = 'block';
+      
+      // Forzar la inicialización de la cámara
+      navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+        .then(function(stream) {
+          console.log('Cámara activada correctamente');
+        })
+        .catch(function(err) {
+          console.error('Error al acceder a la cámara:', err);
+          alert('Error al acceder a la cámara. Por favor, permite el acceso cuando se te solicite.');
+        });
+    });
+  </script>
+</body>
+</html>
